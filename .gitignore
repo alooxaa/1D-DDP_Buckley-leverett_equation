@@ -1,0 +1,16 @@
+# Trained weights: 96 sweep models plus the sequential and reference runs.
+# Regenerate with ./run_all.sh
+*.pth
+
+# Per-configuration plots, two per configuration. The sweep-level summary
+# plots and everything under report/ are tracked.
+ddp_adam/*/*/*/solution.png
+ddp_adam/*/*/*/loss.png
+ddp_adam_lbfgs/*/*/*/solution.png
+ddp_adam_lbfgs/*/*/*/loss.png
+
+# Run logs
+logs/
+
+__pycache__/
+*.py[cod]

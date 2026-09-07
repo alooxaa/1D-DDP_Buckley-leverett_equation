@@ -1,0 +1,42 @@
+{
+  "5000": {
+    "model": "sequential/5000/model.pth",
+    "mode": "sequential Adam + L-BFGS (1 GPU)",
+    "l2_norm": 0.06527451405983477,
+    "l2_mean": 0.073133991442931,
+    "l_inf": 0.6190377855368677,
+    "l2_std": 0.04024674305947105,
+    "l2_max_slice": 0.19814746683220635,
+    "mass_balance_mean": 0.0028976436204607102,
+    "mass_balance_max": 0.0031868839119902903,
+    "mass_balance_final": 0.0028792534310848605,
+    "mass_balance_rel_mean": 0.007457879128468675,
+    "mass_balance_rel_max": 0.02893508630709002,
+    "mass_balance_rel_final": 0.0028792534310848605,
+    "rel_t_from": 0.1,
+    "mass_t0": -3.7984771694097384e-05,
+    "mass_final": 0.85108912768238,
+    "injected_final": 1.0026386989869598,
+    "produced_final": 0.15439083996397052
+  },
+  "15000": {
+    "model": "sequential/15000/model.pth",
+    "mode": "sequential Adam + L-BFGS (1 GPU)",
+    "l2_norm": 0.06832683835239578,
+    "l2_mean": 0.07680175276895343,
+    "l_inf": 0.6248054617193491,
+    "l2_std": 0.042495949709176084,
+    "l2_max_slice": 0.20850787907630186,
+    "mass_balance_mean": 0.003096257142988202,
+    "mass_balance_max": 0.003405859053353111,
+    "mass_balance_final": 0.003113000528719878,
+    "mass_balance_rel_mean": 0.007969178226768339,
+    "mass_balance_rel_max": 0.030959742073871782,
+    "mass_balance_rel_final": 0.003113000528719878,
+    "rel_t_from": 0.1,
+    "mass_t0": 0.0002178619321156609,
+    "mass_final": 0.8511247735584881,
+    "injected_final": 1.002710473335504,
+    "produced_final": 0.1549165622378513
+  }
+}

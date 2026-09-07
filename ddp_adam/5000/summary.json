@@ -1,0 +1,46 @@
+{
+  "n_experiments": 24,
+  "adam_steps": 5000,
+  "num_gpus": 2,
+  "batch_sizes": [
+    32,
+    64,
+    128,
+    256,
+    512,
+    1024,
+    2048,
+    4096
+  ],
+  "l2_mean_all_experiments": 0.24922036361583913,
+  "l2_std_all_experiments": 0.09920487387319527,
+  "l2_min_all_experiments": 0.06933473304196024,
+  "l2_max_all_experiments": 0.38663689872211715,
+  "l2_median_all_experiments": 0.2538184522832624,
+  "time_mean_sec": 20.595770498538815,
+  "time_min_sec": 19.859797650016844,
+  "time_max_sec": 21.441166547010653,
+  "sweep_total_sec": 500.3695408809581,
+  "best_model": "sqrtK_lr1.414e-03_bs4096_gpu2",
+  "best_l2": 0.06933473304196024,
+  "l2_mean_per_law": {
+    "baseline": {
+      "n_experiments": 8,
+      "l2_mean": 0.2635844010447587,
+      "l2_min": 0.16247527367456704,
+      "l2_max": 0.3562269065112234
+    },
+    "linearK": {
+      "n_experiments": 8,
+      "l2_mean": 0.2369742872609919,
+      "l2_min": 0.08685698213672173,
+      "l2_max": 0.38591339364801547
+    },
+    "sqrtK": {
+      "n_experiments": 8,
+      "l2_mean": 0.24710240254176674,
+      "l2_min": 0.06933473304196024,
+      "l2_max": 0.38663689872211715
+    }
+  }
+}

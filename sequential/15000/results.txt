@@ -1,0 +1,37 @@
+1D Buckley-Leverett PINN (sequential)
+==============================================
+
+points          : 10000 collocation, 150 IC, 150 BC
+network         : 2-20-20x7-1, 3021 parameters
+device          : NVIDIA GeForce RTX 5090
+
+L2 error
+----------------------------------------------
+  t = 0.25  : 9.112469e-02
+  t = 0.5   : 7.439689e-02
+  t = 0.75  : 6.588197e-02
+  t = 1.0   : 2.339718e-03
+  mean      : 5.843582e-02
+
+Mass balance
+----------------------------------------------
+  grid          : 201 time levels x 401 points in x
+  relative from : t >= 0.1
+  rel mean      : 7.969178e-03
+  rel at t = 1  : 3.113001e-03
+  rel max       : 3.095974e-02
+  abs mean      : 3.096257e-03   (pore volumes)
+  abs max       : 3.405859e-03
+  mass at t = 0 : 2.178619e-04   (ideally 0)
+  mass at t = 1 : 0.851125   injected 1.002710   produced 0.154917
+
+Time and steps
+----------------------------------------------
+  Adam      :    55.31 s   15000 epochs   (3.69 ms/epoch)
+  L-BFGS    :   312.37 s   3392 iterations, 3706 closure calls   (92.09 ms/iteration)
+  total     :   367.68 s
+
+Loss
+----------------------------------------------
+  after Adam   : 1.554164e-03
+  after L-BFGS : 4.995824e-06
