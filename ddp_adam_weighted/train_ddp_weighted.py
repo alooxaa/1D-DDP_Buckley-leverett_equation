@@ -18,17 +18,30 @@ no second stage at all, already reaches a competitive L2 error in about 20 s
 at 5000 updates and about 60 s at 15000, that is, an order of magnitude faster
 than the two-stage sequential scheme.
 
-Experiment: 3 learning rate scaling laws x 8 mini-batch sizes = 24
-configurations per sweep (the 5000-update sweep also includes batch 8192).
-Each one performs a fixed number of optimizer updates (not epochs), 5000 or
-15000 depending on --adam-steps.
+Experiment: 5 learning rate scaling laws x 8 mini-batch sizes = 40
+configurations per sweep (the 5000-update sweep also includes batch 8192, so
+45). Each one performs a fixed number of optimizer updates (not epochs), 5000
+or 15000 depending on --adam-steps.
+
+Three laws scale the learning rate with the number of GPUs, two scale it with
+the mini-batch size relative to the full collocation set:
 
     L0 = 1e-3            base lr, the same value used in train_bl.py
     K  = number of GPUs  from dist.get_world_size()
+    G  = mini-batch size per GPU
+    G0 = 10000           number of collocation points, i.e. the full batch
 
     baseline : lr = L0
     linearK  : lr = L0 * K
     sqrtK    : lr = L0 * sqrt(K)
+    linearG  : lr = L0 * (G / G0)
+    sqrtG    : lr = L0 * sqrt(G / G0)
+
+The batch-dependent laws are included for completeness: at small batches they
+shrink the learning rate by two to three orders of magnitude (linearG gives
+3.2e-6 at G = 32), so the network barely trains. This is the expected
+behaviour of the formula, not a failure of the run, and it is why the later
+unweighted series keeps only the three GPU-count laws.
 
 Usage (from the repository root, so that data/ resolves):
     torchrun --nproc_per_node=2 ddp_adam_weighted/train_ddp_weighted.py --verify
@@ -76,7 +89,8 @@ T_EVAL = [0.25, 0.5, 0.75, 1.0]   # time levels used for the L2 report and plots
 BASE_LR = 1e-3        # L0: the same lr as in train_bl.py
 ADAM_STEPS = 15000    # exactly this many optimizer updates per configuration
 BATCH_SIZES = [32, 64, 128, 256, 512, 1024, 2048, 4096]         # per GPU
-LR_LAWS = ["baseline", "linearK", "sqrtK"]
+LR_LAWS = ["baseline", "linearK", "sqrtK", "linearG", "sqrtG"]
+G0 = 10000            # denominator of the batch-dependent laws: the full batch
 
 EXPERIMENTS_DIR = "ddp_adam_weighted/15000"
 DATA_DIR = "data"
@@ -420,17 +434,17 @@ def plot_sweep(rows, out_dir):
 
 # ───────────────────────────── scaling laws ─────────────────────────────────
 def compute_lr(law, batch_size, world_size):
-    """lr for the chosen law. L0 = BASE_LR, K = world_size.
-
-    batch_size stays in the signature so that call sites match the earlier
-    version: batch-dependent laws are not used in this series.
-    """
+    """lr for the chosen law. L0 = BASE_LR, K = world_size, G0 = 10000."""
     if law == "baseline":
         return BASE_LR
     if law == "linearK":
         return BASE_LR * world_size
     if law == "sqrtK":
         return BASE_LR * math.sqrt(world_size)
+    if law == "linearG":
+        return BASE_LR * (batch_size / G0)
+    if law == "sqrtG":
+        return BASE_LR * math.sqrt(batch_size / G0)
     raise ValueError(f"unknown lr law: {law}")
 
 

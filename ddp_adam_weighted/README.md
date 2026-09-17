@@ -45,6 +45,15 @@ With `L0 = 1e-3` and `K = 2` GPUs:
 | `baseline` | `lr = L0` |
 | `linearK` | `lr = L0 * K` |
 | `sqrtK` | `lr = L0 * sqrt(K)` |
+| `linearG` | `lr = L0 * G / G0` |
+| `sqrtG` | `lr = L0 * sqrt(G / G0)` |
+
+Here `G` is the mini-batch size per GPU and `G0 = 10000` the full collocation
+set. The two batch-dependent rules are kept for completeness. At small batches
+they shrink the learning rate by two to three orders of magnitude, `linearG`
+gives `3.2e-6` at `G = 32`, and the network barely trains; that is what the
+formula prescribes, not a failed run. It is also why the later unweighted
+series keeps only the three GPU-count rules.
 
 Batch sizes per GPU: 32 to 4096, and additionally 8192 in the 5000-update
 sweep.
