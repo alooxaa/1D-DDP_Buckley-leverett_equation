@@ -8,6 +8,8 @@ ddp_adam/*/*/*/solution.png
 ddp_adam/*/*/*/loss.png
 ddp_adam_lbfgs/*/*/*/solution.png
 ddp_adam_lbfgs/*/*/*/loss.png
+ddp_adam_weighted/*/*/*/solution.png
+ddp_adam_weighted/*/*/*/loss.png
 
 # Run logs
 logs/
